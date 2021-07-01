@@ -1,5 +1,7 @@
 # concordium-exporter
 
+[![Release Go Project/Release ghcr image](https://github.com/liray-unendlich/concordium-exporter/actions/workflows/release-image.yml/badge.svg)](https://github.com/liray-unendlich/concordium-exporter/actions/workflows/release-image.yml)
+
 ## Example
 
 ```bash
