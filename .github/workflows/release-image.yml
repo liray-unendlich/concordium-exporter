@@ -87,7 +87,7 @@ jobs:
           goarch: ${{matrix.arch}}
         run: |
           mkdir dist
-          GOOS=$goos GOARCH=$goarch go build -v -o dist/app .
+          GOOS=$goos GOARCH=$goarch go build -v -o dist/concordium-exporter .
           zip -j -r release dist
 
       - name: Download artifact to get url to upload
