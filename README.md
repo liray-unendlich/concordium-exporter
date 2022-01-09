@@ -23,7 +23,7 @@ It serves API on 9366, connect concordium-node with localhost:10211, and it uses
 ex.2: docker
 
 ```bash
-docker pull liray-unendlich/concordium-exporter
+docker pull ghcr.io/liray-unendlich/concordium-exporter
 docker run -d --net="host" -p 9360:9360 liray-unendlich/concordium-exporter
 ```
 
