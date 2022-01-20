@@ -45,3 +45,14 @@ It serves these information.
 | block_receive_latency_inEMA  | Latency of block receiving(EMA)              |
 | block_receive_period_inEMA   | duration per receiving block[s](EMA)         |
 | transactions_per_block_inEMA | Transaction per block(EMA)                   |
+
+## Connecting and using data
+
+You can connect the exporter with `http://VPS-IP:hport/metrics`.
+
+## Use grafana to monitor your exported data
+
+You can use our example dashboard json: [HERE](concordium-dashboard.json)
+
+Here is example screenshot:
+![dashboard screenshot](example-dashboard.png)
