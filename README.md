@@ -24,7 +24,7 @@ ex.2: docker
 
 ```bash
 docker pull ghcr.io/liray-unendlich/concordium-exporter
-docker run -d --net="host" -p 9360:9360 liray-unendlich/concordium-exporter
+docker run -d --net="host" -p 9360:9360 ghcr.io/liray-unendlich/concordium-exporter
 ```
 
 ## Serving Information
