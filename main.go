@@ -16,7 +16,7 @@ import (
 )
 
 // Setup initial variables
-var version ="1.0.1"
+var version ="1.1.0"
 const namespace = "concordium"
 var url = "localhost:10000"
 var password = "rpcadmin"
