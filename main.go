@@ -3,9 +3,9 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"flag"
 	"fmt"
 	"log"
+	"flag"
 	"net/http"
 	"os"
 	"google.golang.org/grpc"
@@ -379,19 +379,17 @@ func main() {
 		os.Exit(2)
 	}
 
-	url = *(flag.String("url","localhost:10000","Concordium GRPC URL"))
-	hport := flag.String("hport", "9360", "The port listens on for HTTP requessts")
-	ver := flag.Bool("v", false, "Print version number and exit")
-	password = *(flag.String("pwd", "rpcadmin", "The password to pass concordium node"))
+	var hport string
+
+	flag.StringVar(&url, "url","localhost:10000", "Concordium gRPC URL")
+	flag.StringVar(&hport,"hport", "9360", "The port listens on for HTTP requests")
+	flag.StringVar(&password,"pwd",password,"The password to pass concordium node")
 
 	flag.Parse()
+	println(url,hport,password)
 
 	if len(flag.Args()) > 0 {
 		flag.Usage()
-	}
-	if *ver {
-		fmt.Println(version)
-		os.Exit(0)
 	}
 
 	conn, err := grpc.Dial(url, grpc.WithInsecure())
@@ -403,5 +401,5 @@ func main() {
 	http.HandleFunc("/metrics", func(w http.ResponseWriter, r *http.Request){
 		metricsHandler(w, r)
 	})
-	log.Fatal(http.ListenAndServe(":" + *hport, nil))
+	log.Fatal(http.ListenAndServe(":" + hport, nil))
 }
