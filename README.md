@@ -53,6 +53,12 @@ You can connect the exporter with `http://VPS-IP:hport/metrics`.
 ## Use grafana to monitor your exported data
 
 You can use our example dashboard json: [HERE](concordium-dashboard.json)
-
+/var/lib/postgresql/data
+/home/pukutai/ccd-postgres/data
 Here is example screenshot:
 ![dashboard screenshot](example-dashboard.png)
+
+### 開発用メモ
+
+`grpcurl -plaintext -rpc-header 'authentication: $password' -proto concordium_p2p_rpc.proto $grpc_url concordium.P2P.$command `
+で gRPC 経由でコマンドが叩ける

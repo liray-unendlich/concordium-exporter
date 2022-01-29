@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"os"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
@@ -18,8 +19,6 @@ import (
 // Setup initial variables
 var version ="1.0.1"
 const namespace = "concordium"
-var url = "localhost:10000"
-var password = "rpcadmin"
 
 type metricsData struct {
 	PeerTotalReceived float64
@@ -379,12 +378,26 @@ func main() {
 		os.Exit(2)
 	}
 
-	url = *(flag.String("url","localhost:10000","Concordium GRPC URL"))
-	hport := flag.String("hport", "9360", "The port listens on for HTTP requessts")
-	ver := flag.Bool("v", false, "Print version number and exit")
-	password = *(flag.String("pwd", "rpcadmin", "The password to pass concordium node"))
+	var (
+		url string
+		hport int
+		password string
+	)
+
+	flag.StringVar(&url, "-url", "localhost:10000", "Concordium gRPC URL")
+	flag.StringVar(&url, "u", "localhost:10000", "Concordium gRPC URL")
+	flag.IntVar(&hport, "-hport", 9360, "The port listens on for HTTP requessts")
+	flag.IntVar(&hport, "hp", 9360, "The port listens on for HTTP requessts")
+	flag.StringVar(&password, "-password", "rpcadmin", "The password to pass concordium node")
+	flag.StringVar(&password, "pwd", "rpcadmin", "The password to pass concordium node")
 
 	flag.Parse()
+
+	fmt.PrintIn("Version:",version)
+
+	fmt.Println("URL           :",url)
+	fmt.Println("EXPORTING PORT:",*hport)
+	fmt.Println("GRPC PASSWORD :",password)
 
 	if len(flag.Args()) > 0 {
 		flag.Usage()
@@ -400,8 +413,20 @@ func main() {
 	}
 	defer conn.Close()
 
-	http.HandleFunc("/metrics", func(w http.ResponseWriter, r *http.Request){
-		metricsHandler(w, r)
+	md := metadata.New(map[string]string{"authentication": password})
+	ctx := metadata.NewOutgoingContext(context.Background(), md)
+	client := pb.NewP2PClient(conn)
+
+	registry := prometheus.NewPedanticRegistry()
+	registry.MustRegister(
+		newconcordiumCollector(client,ctx)
+	)
+
+	handler := promhttp.HandlerFor(registry.promhttp.HandlerOpts{
+		ErrorLog: log.New(os.Stderr, log.Prefix(), log.Flags()),
+		ErrorHandling: promhttp.ContinueOnError,
 	})
-	log.Fatal(http.ListenAndServe(":" + *hport, nil))
+
+	http.Handle("/metrics", handler)
+	log.Fatal(http.ListenAndServe(*addr, nil))
 }
