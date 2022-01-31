@@ -50,6 +50,13 @@ type metricsData struct {
 	BestBlock string
 	GenesisBlock string
 	BlockLastReceivedTime string
+	// NodeInfo
+	// nodeId string
+	// currentTime int
+	BakerRunning int
+	Running int
+	// BakerCommittee string
+	BakerId int
 }
 
 type concordiumCollector struct {
@@ -58,7 +65,7 @@ type concordiumCollector struct {
 	LastFinalizedBlockHeight prometheus.Gauge
 	BlockArriveLatencyEMSD prometheus.Gauge
 	BlockReceiveLatencyEMSD prometheus.Gauge
-	//LastFinalizedBlock string
+	// LastFinalizedBlock string
 	BlockReceivePeriodEMSD prometheus.Gauge
 	BlockArrivePeriodEMSD prometheus.Gauge
 	BlocksReceivedCount prometheus.Gauge
@@ -70,17 +77,23 @@ type concordiumCollector struct {
 	EpochDuration prometheus.Gauge
 	BlocksVerifiedCount prometheus.Gauge
 	SlotDuration prometheus.Gauge
-	//GenesisTime string
+	// GenesisTime string
 	FinalizationPeriodEMSD prometheus.Gauge
 	TransactionsPerBlockEMA prometheus.Gauge
 	BlockArriveLatencyEMA prometheus.Gauge
 	BlockReceiveLatencyEMA prometheus.Gauge
 	BlockArrivePeriodEMA prometheus.Gauge
 	BlockReceivePeriodEMA prometheus.Gauge
-	//BlockLastArrivedTime string
-	//BestBlock string
-	//GenesisBlock string
-	//BlockLastReceivedTime string
+	// BlockLastArrivedTime string
+	// BestBlock string
+	// GenesisBlock string
+	// BlockLastReceivedTime string
+	// NodeInfo
+	// nodeId string
+	// currentTime int64
+	BakerRunning prometheus.Gauge
+	Running prometheus.Gauge
+	BakerId prometheus.Gauge
 }
 
 func newconcordiumCollector() *concordiumCollector {
@@ -190,6 +203,21 @@ func newconcordiumCollector() *concordiumCollector {
 			Name: "block_receive_period_inEMA",
 			Help: "Received block period in EMA",
 		}),
+		BakerRunning: prometheus.NewGauge(prometheus.GaugeOpts{
+			Namespace: namespace,
+			Name: "baker_running",
+			Help: "Bool value of whether baker is running. true=1, false=0",
+		}),
+		Running: prometheus.NewGauge(prometheus.GaugeOpts{
+			Namespace: namespace,
+			Name: "consensus_running",
+			Help: "Bool value of whether consensus module is running. true=1, false=0",
+		}),
+		BakerId: prometheus.NewGauge(prometheus.GaugeOpts{
+			Namespace: namespace,
+			Name: "baker_id",
+			Help: "Baker ID in integer",
+		}),
 	}
 }
 
@@ -215,6 +243,9 @@ func (c *concordiumCollector) Describe(ch chan <- *prometheus.Desc) {
 	ch <- c.BlockReceiveLatencyEMA.Desc()
 	ch <- c.BlockArrivePeriodEMA.Desc()
 	ch <- c.BlockReceivePeriodEMA.Desc()
+	ch <- c.BakerRunning.Desc()
+	ch <- c.Running.Desc()
+	ch <- c.BakerId.Desc()
 }
 
 func (c *concordiumCollector) Collect(ch chan <- prometheus.Metric) {
@@ -324,11 +355,28 @@ func (c *concordiumCollector) Collect(ch chan <- prometheus.Metric) {
 		prometheus.GaugeValue,
 		data.BlockReceivePeriodEMA,
 	)
+	ch <- prometheus.MustNewConstMetric(
+		c.BakerRunning.Desc(),
+		prometheus.GaugeValue,
+		float64(data.BakerRunning),
+	)
+	ch <- prometheus.MustNewConstMetric(
+		c.Running.Desc(),
+		prometheus.GaugeValue,
+		float64(data.Running),
+	)
+	ch <- prometheus.MustNewConstMetric(
+		c.BakerId.Desc(),
+		prometheus.GaugeValue,
+		float64(data.BakerId),
+	)
 }
 
 // fetchAPI fetches the results of GetConsensusStatus, PeerTotalSent, PeerTotalReceived
 func (c *concordiumCollector) fetchAPI() (metricsData, error) {
 	var data metricsData
+	data.BakerRunning = 0
+	data.Running = 0
 	conn, err := grpc.Dial(url, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("client connection error: %#v", err)
@@ -358,6 +406,23 @@ func (c *concordiumCollector) fetchAPI() (metricsData, error) {
 		return data, err_rec
 	}
 	data.PeerTotalReceived = float64(response_rec.Value)
+	// Call NodeInfo
+	response_node, err_node := client.NodeInfo(ctx, &pb.Empty{})
+	if err_node != nil {
+		fmt.Printf("Get NodeInfo:%#v \n",err_node)
+		return data, err_node
+	}
+	if response_node.ConsensusBakerRunning {
+		data.BakerRunning = 1
+	} else {
+		data.BakerRunning = 0
+	}
+	if response_node.ConsensusRunning {
+		data.Running = 1
+	} else {
+		data.Running = 0
+	}
+	data.BakerId = int(response_node.ConsensusBakerId.Value)
 	return data, err
 }
 
