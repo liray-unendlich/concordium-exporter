@@ -19,7 +19,7 @@ import (
 )
 
 // Setup initial variables
-var version = "1.1.0"
+var version = "1.2.1"
 
 const namespace = "concordium"
 
