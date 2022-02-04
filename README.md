@@ -46,11 +46,12 @@ Ofcourse, I recommend to use specific version, not latest.
 
 There are several option for exporter.
 
-| flag          | outline                                                   |
-| ------------- | --------------------------------------------------------- |
-| -hport string | The port listens on for HTTP requests (default "9360")    |
-| -pwd string   | The password to pass concordium node (default "rpcadmin") |
-| -url string   | Concordium gRPC URL (default "localhost:10000")           |
+| flag              | outline                                                   |
+| ----------------- | --------------------------------------------------------- |
+| -hport string     | The port listens on for HTTP requests (default "9360")    |
+| -pwd string       | The password to pass concordium node (default "rpcadmin") |
+| -url string       | Concordium gRPC URL (default "localhost:10000")           |
+| --baker or -baker | Whether your node is baking                               |
 
 You can use environment variable for set options.
 
@@ -59,6 +60,7 @@ You can use environment variable for set options.
 | CCDEXPORTER_HPORT=\<HPORT\>  |
 | CCDEXPORTER_PWD=\<PASSWORD\> |
 | CCDEXPORTER_URL=\<IP:PORT\>  |
+| CCDEXPORTER_BAKER=TRUE       |
 
 ## Serving Information
 
@@ -81,6 +83,9 @@ It serves these information.
 | baker_running                | Status of baker node (If you want to use this information, you need to execute this exporter with baker node) |
 | consensus_running            | Status of node and consensus module                                                                           |
 | baker_id                     | Id of baker node (If you want to use this information, you need to execute this exporter with baker node)     |
+
+| baker_lottery_power | Probability that a baker node bake a block per block |
+| estimated_baking_block_per_day | The number of blocks your baker is expected to bake per day |
 
 ## Connecting and using data
 
