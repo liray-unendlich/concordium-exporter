@@ -29,35 +29,7 @@
 			"fieldConfig": {
 				"defaults": {
 					"color": {
-						"mode": "palette-classic"
-					},
-					"custom": {
-						"axisLabel": "",
-						"axisPlacement": "auto",
-						"barAlignment": 0,
-						"drawStyle": "line",
-						"fillOpacity": 0,
-						"gradientMode": "none",
-						"hideFrom": {
-							"legend": false,
-							"tooltip": false,
-							"viz": false
-						},
-						"lineInterpolation": "linear",
-						"lineWidth": 1,
-						"pointSize": 5,
-						"scaleDistribution": {
-							"type": "linear"
-						},
-						"showPoints": "auto",
-						"spanNulls": false,
-						"stacking": {
-							"group": "A",
-							"mode": "none"
-						},
-						"thresholdsStyle": {
-							"mode": "off"
-						}
+						"mode": "thresholds"
 					},
 					"mappings": [],
 					"thresholds": {
@@ -77,156 +49,48 @@
 				"overrides": []
 			},
 			"gridPos": {
-				"h": 8,
-				"w": 7,
+				"h": 4,
+				"w": 2,
 				"x": 0,
 				"y": 0
 			},
-			"id": 10,
+			"id": 24,
 			"options": {
-				"legend": {
-					"calcs": [],
-					"displayMode": "list",
-					"placement": "bottom"
+				"colorMode": "value",
+				"graphMode": "none",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
 				},
-				"tooltip": {
-					"mode": "single"
-				}
+				"textMode": "auto"
 			},
+			"pluginVersion": "8.4.0-beta1",
 			"targets": [
 				{
-					"exemplar": true,
-					"expr": "concordium_best_block_height",
-					"interval": "",
-					"legendFormat": "best_block_height",
-					"refId": "A"
-				},
-				{
-					"exemplar": true,
-					"expr": "concordium_last_finalized_block_height",
-					"hide": false,
-					"instant": false,
-					"interval": "",
-					"legendFormat": "last_finalized_height",
-					"refId": "B"
-				}
-			],
-			"title": "Block height",
-			"type": "timeseries"
-		},
-		{
-			"fieldConfig": {
-				"defaults": {
-					"color": {
-						"mode": "palette-classic"
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
 					},
-					"custom": {
-						"axisLabel": "",
-						"axisPlacement": "auto",
-						"barAlignment": 0,
-						"drawStyle": "line",
-						"fillOpacity": 0,
-						"gradientMode": "none",
-						"hideFrom": {
-							"legend": false,
-							"tooltip": false,
-							"viz": false
-						},
-						"lineInterpolation": "linear",
-						"lineWidth": 1,
-						"pointSize": 5,
-						"scaleDistribution": {
-							"type": "linear"
-						},
-						"showPoints": "auto",
-						"spanNulls": false,
-						"stacking": {
-							"group": "A",
-							"mode": "none"
-						},
-						"thresholdsStyle": {
-							"mode": "off"
-						}
-					},
-					"mappings": [],
-					"thresholds": {
-						"mode": "absolute",
-						"steps": [
-							{
-								"color": "green",
-								"value": null
-							},
-							{
-								"color": "red",
-								"value": 80
-							}
-						]
-					}
-				},
-				"overrides": []
-			},
-			"gridPos": {
-				"h": 8,
-				"w": 7,
-				"x": 7,
-				"y": 0
-			},
-			"id": 20,
-			"options": {
-				"legend": {
-					"calcs": [],
-					"displayMode": "hidden",
-					"placement": "bottom"
-				},
-				"tooltip": {
-					"mode": "single"
-				}
-			},
-			"targets": [
-				{
 					"exemplar": true,
-					"expr": "concordium_transactions_per_block_inEMA",
+					"expr": "concordium_baker_id",
 					"interval": "",
 					"legendFormat": "",
 					"refId": "A"
 				}
 			],
-			"title": "Transaction per block EMA",
-			"type": "timeseries"
+			"title": "Baker ID",
+			"transparent": true,
+			"type": "stat"
 		},
 		{
+			"description": "1 = STATUS OF BAKER IS TRUE",
 			"fieldConfig": {
 				"defaults": {
 					"color": {
-						"mode": "palette-classic"
-					},
-					"custom": {
-						"axisLabel": "",
-						"axisPlacement": "auto",
-						"barAlignment": 0,
-						"drawStyle": "line",
-						"fillOpacity": 0,
-						"gradientMode": "none",
-						"hideFrom": {
-							"legend": false,
-							"tooltip": false,
-							"viz": false
-						},
-						"lineInterpolation": "linear",
-						"lineWidth": 1,
-						"pointSize": 5,
-						"scaleDistribution": {
-							"type": "linear"
-						},
-						"showPoints": "auto",
-						"spanNulls": false,
-						"stacking": {
-							"group": "A",
-							"mode": "none"
-						},
-						"thresholdsStyle": {
-							"mode": "off"
-						}
+						"mode": "thresholds"
 					},
 					"mappings": [],
 					"thresholds": {
@@ -246,33 +110,42 @@
 				"overrides": []
 			},
 			"gridPos": {
-				"h": 8,
-				"w": 7,
-				"x": 14,
+				"h": 4,
+				"w": 2,
+				"x": 2,
 				"y": 0
 			},
-			"id": 14,
+			"id": 26,
 			"options": {
-				"legend": {
-					"calcs": [],
-					"displayMode": "hidden",
-					"placement": "bottom"
+				"colorMode": "value",
+				"graphMode": "area",
+				"justifyMode": "auto",
+				"orientation": "vertical",
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
 				},
-				"tooltip": {
-					"mode": "single"
-				}
+				"text": {},
+				"textMode": "auto"
 			},
+			"pluginVersion": "8.4.0-beta1",
 			"targets": [
 				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
 					"exemplar": true,
-					"expr": "concordium_best_block_height - concordium_last_finalized_block_height",
+					"expr": "concordium_baker_running",
 					"interval": "",
 					"legendFormat": "",
 					"refId": "A"
 				}
 			],
-			"title": "Difference with finalized/unfinalized",
-			"type": "timeseries"
+			"title": "Baker Status",
+			"transparent": true,
+			"type": "stat"
 		},
 		{
 			"fieldConfig": {
@@ -326,98 +199,10 @@
 				"overrides": []
 			},
 			"gridPos": {
-				"h": 8,
-				"w": 7,
-				"x": 0,
-				"y": 8
-			},
-			"id": 22,
-			"options": {
-				"legend": {
-					"calcs": [],
-					"displayMode": "list",
-					"placement": "bottom"
-				},
-				"tooltip": {
-					"mode": "single"
-				}
-			},
-			"targets": [
-				{
-					"exemplar": true,
-					"expr": "concordium_block_arrive_period_inEMA",
-					"interval": "",
-					"legendFormat": "Arriving period",
-					"refId": "A"
-				},
-				{
-					"exemplar": true,
-					"expr": "concordium_block_receive_period_inEMA",
-					"hide": false,
-					"interval": "",
-					"legendFormat": "Receiving period",
-					"refId": "B"
-				}
-			],
-			"title": "Period of block arriving/receiving",
-			"type": "timeseries"
-		},
-		{
-			"fieldConfig": {
-				"defaults": {
-					"color": {
-						"mode": "palette-classic"
-					},
-					"custom": {
-						"axisLabel": "",
-						"axisPlacement": "auto",
-						"barAlignment": 0,
-						"drawStyle": "line",
-						"fillOpacity": 0,
-						"gradientMode": "none",
-						"hideFrom": {
-							"legend": false,
-							"tooltip": false,
-							"viz": false
-						},
-						"lineInterpolation": "linear",
-						"lineWidth": 1,
-						"pointSize": 5,
-						"scaleDistribution": {
-							"type": "linear"
-						},
-						"showPoints": "auto",
-						"spanNulls": false,
-						"stacking": {
-							"group": "A",
-							"mode": "none"
-						},
-						"thresholdsStyle": {
-							"mode": "off"
-						}
-					},
-					"mappings": [],
-					"thresholds": {
-						"mode": "absolute",
-						"steps": [
-							{
-								"color": "green",
-								"value": null
-							},
-							{
-								"color": "red",
-								"value": 80
-							}
-						]
-					}
-				},
-				"overrides": []
-			},
-			"gridPos": {
-				"h": 8,
-				"w": 7,
-				"x": 7,
-				"y": 8
+				"h": 4,
+				"w": 3,
+				"x": 4,
+				"y": 0
 			},
 			"id": 8,
 			"options": {
@@ -427,7 +212,8 @@
 					"placement": "bottom"
 				},
 				"tooltip": {
-					"mode": "single"
+					"mode": "single",
+					"sort": "none"
 				}
 			},
 			"targets": [
@@ -440,6 +226,582 @@
 				}
 			],
 			"title": "finalization period EMA",
+			"transparent": true,
+			"type": "timeseries"
+		},
+		{
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 8,
+				"w": 7,
+				"x": 7,
+				"y": 0
+			},
+			"id": 12,
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
+					"exemplar": true,
+					"expr": "rate(concordium_peer_total_received_amount[5m])",
+					"interval": "",
+					"legendFormat": "received packet",
+					"refId": "A"
+				},
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
+					"exemplar": true,
+					"expr": "rate(concordium_peer_total_sent_amount[5m])",
+					"hide": false,
+					"interval": "",
+					"legendFormat": "sent packet",
+					"refId": "B"
+				}
+			],
+			"title": "packet amount[5m]",
+			"transparent": true,
+			"type": "timeseries"
+		},
+		{
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 8,
+				"w": 7,
+				"x": 14,
+				"y": 0
+			},
+			"id": 10,
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
+					"exemplar": true,
+					"expr": "concordium_best_block_height",
+					"interval": "",
+					"legendFormat": "best_block_height",
+					"refId": "A"
+				},
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
+					"exemplar": true,
+					"expr": "concordium_last_finalized_block_height",
+					"hide": false,
+					"instant": false,
+					"interval": "",
+					"legendFormat": "last_finalized_height",
+					"refId": "B"
+				}
+			],
+			"title": "Block height",
+			"transparent": true,
+			"type": "timeseries"
+		},
+		{
+			"description": "Finalized block count after this node started.",
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							}
+						]
+					}
+				},
+				"overrides": [
+					{
+						"__systemRef": "hideSeriesFrom",
+						"matcher": {
+							"id": "byNames",
+							"options": {
+								"mode": "exclude",
+								"names": [
+									"concordium_finalization_count{instance=\"concordium-exporter:9460\", job=\"concordium-exporter\"}"
+								],
+								"prefix": "All except:",
+								"readOnly": true
+							}
+						},
+						"properties": [
+							{
+								"id": "custom.hideFrom",
+								"value": {
+									"legend": false,
+									"tooltip": false,
+									"viz": false
+								}
+							}
+						]
+					}
+				]
+			},
+			"gridPos": {
+				"h": 4,
+				"w": 3,
+				"x": 0,
+				"y": 4
+			},
+			"id": 28,
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "hidden",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
+					"exemplar": true,
+					"expr": "concordium_finalization_count",
+					"interval": "",
+					"legendFormat": "",
+					"refId": "A"
+				}
+			],
+			"title": "Finalized block",
+			"transparent": true,
+			"type": "timeseries"
+		},
+		{
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 4,
+				"w": 4,
+				"x": 3,
+				"y": 4
+			},
+			"id": 22,
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
+					"exemplar": true,
+					"expr": "concordium_block_arrive_period_inEMA",
+					"interval": "",
+					"legendFormat": "Arriving period",
+					"refId": "A"
+				},
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
+					"exemplar": true,
+					"expr": "concordium_block_receive_period_inEMA",
+					"hide": false,
+					"interval": "",
+					"legendFormat": "Receiving period",
+					"refId": "B"
+				}
+			],
+			"title": "Period of block arriving/receiving",
+			"transparent": true,
+			"type": "timeseries"
+		},
+		{
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 8,
+				"w": 7,
+				"x": 0,
+				"y": 8
+			},
+			"id": 20,
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "hidden",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
+					"exemplar": true,
+					"expr": "concordium_transactions_per_block_inEMA",
+					"interval": "",
+					"legendFormat": "",
+					"refId": "A"
+				}
+			],
+			"title": "Transaction per block EMA",
+			"transparent": true,
+			"type": "timeseries"
+		},
+		{
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 8,
+				"w": 7,
+				"x": 7,
+				"y": 8
+			},
+			"id": 14,
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "hidden",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
+					"exemplar": true,
+					"expr": "concordium_best_block_height - concordium_last_finalized_block_height",
+					"interval": "",
+					"legendFormat": "",
+					"refId": "A"
+				}
+			],
+			"title": "Difference with finalized/unfinalized",
+			"transparent": true,
 			"type": "timeseries"
 		},
 		{
@@ -499,94 +861,6 @@
 				"x": 14,
 				"y": 8
 			},
-			"id": 12,
-			"options": {
-				"legend": {
-					"calcs": [],
-					"displayMode": "list",
-					"placement": "bottom"
-				},
-				"tooltip": {
-					"mode": "single"
-				}
-			},
-			"targets": [
-				{
-					"exemplar": true,
-					"expr": "rate(concordium_peer_total_received_amount[5m])",
-					"interval": "",
-					"legendFormat": "received packet",
-					"refId": "A"
-				},
-				{
-					"exemplar": true,
-					"expr": "rate(concordium_peer_total_sent_amount[5m])",
-					"hide": false,
-					"interval": "",
-					"legendFormat": "sent packet",
-					"refId": "B"
-				}
-			],
-			"title": "packet amount[5m]",
-			"type": "timeseries"
-		},
-		{
-			"fieldConfig": {
-				"defaults": {
-					"color": {
-						"mode": "palette-classic"
-					},
-					"custom": {
-						"axisLabel": "",
-						"axisPlacement": "auto",
-						"barAlignment": 0,
-						"drawStyle": "line",
-						"fillOpacity": 0,
-						"gradientMode": "none",
-						"hideFrom": {
-							"legend": false,
-							"tooltip": false,
-							"viz": false
-						},
-						"lineInterpolation": "linear",
-						"lineWidth": 1,
-						"pointSize": 5,
-						"scaleDistribution": {
-							"type": "linear"
-						},
-						"showPoints": "auto",
-						"spanNulls": false,
-						"stacking": {
-							"group": "A",
-							"mode": "none"
-						},
-						"thresholdsStyle": {
-							"mode": "off"
-						}
-					},
-					"mappings": [],
-					"thresholds": {
-						"mode": "absolute",
-						"steps": [
-							{
-								"color": "green",
-								"value": null
-							},
-							{
-								"color": "red",
-								"value": 80
-							}
-						]
-					}
-				},
-				"overrides": []
-			},
-			"gridPos": {
-				"h": 8,
-				"w": 7,
-				"x": 0,
-				"y": 16
-			},
 			"id": 6,
 			"options": {
 				"legend": {
@@ -595,11 +869,16 @@
 					"placement": "bottom"
 				},
 				"tooltip": {
-					"mode": "single"
+					"mode": "single",
+					"sort": "none"
 				}
 			},
 			"targets": [
 				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
 					"exemplar": true,
 					"expr": "concordium_block_receive_latency_inEMA",
 					"interval": "",
@@ -607,6 +886,10 @@
 					"refId": "A"
 				},
 				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
 					"exemplar": true,
 					"expr": "concordium_block_arrive_latency_inEMA",
 					"hide": false,
@@ -616,23 +899,25 @@
 				}
 			],
 			"title": "Received Block latency EMA",
+			"transparent": true,
 			"type": "timeseries"
 		}
 	],
-	"schemaVersion": 34,
+	"refresh": "",
+	"schemaVersion": 35,
 	"style": "dark",
 	"tags": [],
 	"templating": {
 		"list": []
 	},
 	"time": {
-		"from": "now-7d",
+		"from": "now-2d",
 		"to": "now"
 	},
 	"timepicker": {},
 	"timezone": "",
 	"title": "Concordium Dashboard",
 	"uid": "ccd",
-	"version": 2,
+	"version": 8,
 	"weekStart": ""
 }

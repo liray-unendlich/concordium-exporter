@@ -23,28 +23,64 @@ It serves API on 9366, connect concordium-node with localhost:10211, and it uses
 ex.2: docker
 
 ```bash
-docker pull ghcr.io/liray-unendlich/concordium-exporter
-docker run -d --net="host" -p 9360:9360 ghcr.io/liray-unendlich/concordium-exporter
+docker pull ghcr.io/liray-unendlich/concordium-exporter:latest
+docker run -p 9360:9360 ghcr.io/liray-unendlich/concordium-exporter:latest
 ```
+
+ex.3: docker-compose
+
+```
+  concordium-exporter:
+    image: ghcr.io/liray-unendlich/concordium-exporter:latest
+    environment:
+      CCDEXPORTER_HPORT: '9999'
+      CCDEXPORTER_URL: 'localhost:11111'
+      CCDEXPORTER_PWD: 'rpcasssn'
+    expose:
+     - '9999'
+```
+
+Ofcourse, I recommend to use specific version, not latest.
+
+## Options
+
+There are several option for exporter.
+
+| flag          | outline                                                   |
+| ------------- | --------------------------------------------------------- |
+| -hport string | The port listens on for HTTP requests (default "9360")    |
+| -pwd string   | The password to pass concordium node (default "rpcadmin") |
+| -url string   | Concordium gRPC URL (default "localhost:10000")           |
+
+You can use environment variable for set options.
+
+| environment variable         |
+| ---------------------------- |
+| CCDEXPORTER_HPORT=\<HPORT\>  |
+| CCDEXPORTER_PWD=\<PASSWORD\> |
+| CCDEXPORTER_URL=\<IP:PORT\>  |
 
 ## Serving Information
 
 It serves these information.
 
-| name                         | outline                                      |
-| ---------------------------- | -------------------------------------------- |
-| best_block_height            | Best block number                            |
-| last_finalized_block_height  | Latest finalized block number                |
-| finalization_period_inEMA    | duration per finalization[s](EMA)            |
-| epoch_duration               | duration per epoch[s]                        |
-| slot_duration                | duration per slot[s]                         |
-| peer_total_sent_amount       | Packets your node sent to peer in Byte       |
-| peer_total_receive_amount    | Packets your node received from peer in Byte |
-| block_arrive_latency_inEMA   | Latency of block arrival(EMA)                |
-| block_arrive_period_inEMA    | duration per arriving block[s](EMA)          |
-| block_receive_latency_inEMA  | Latency of block receiving(EMA)              |
-| block_receive_period_inEMA   | duration per receiving block[s](EMA)         |
-| transactions_per_block_inEMA | Transaction per block(EMA)                   |
+| name                         | outline                                                                                                       |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| best_block_height            | Best block number                                                                                             |
+| last_finalized_block_height  | Latest finalized block number                                                                                 |
+| finalization_period_inEMA    | duration per finalization[s](EMA)                                                                             |
+| epoch_duration               | duration per epoch[s]                                                                                         |
+| slot_duration                | duration per slot[s]                                                                                          |
+| peer_total_sent_amount       | Packets your node sent to peer in Byte                                                                        |
+| peer_total_receive_amount    | Packets your node received from peer in Byte                                                                  |
+| block_arrive_latency_inEMA   | Latency of block arrival(EMA)                                                                                 |
+| block_arrive_period_inEMA    | duration per arriving block[s](EMA)                                                                           |
+| block_receive_latency_inEMA  | Latency of block receiving(EMA)                                                                               |
+| block_receive_period_inEMA   | duration per receiving block[s](EMA)                                                                          |
+| transactions_per_block_inEMA | Transaction per block(EMA)                                                                                    |
+| baker_running                | Status of baker node (If you want to use this information, you need to execute this exporter with baker node) |
+| consensus_running            | Status of node and consensus module                                                                           |
+| baker_id                     | Id of baker node (If you want to use this information, you need to execute this exporter with baker node)     |
 
 ## Connecting and using data
 

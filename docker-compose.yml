@@ -1,0 +1,10 @@
+version: '3.5'
+services:
+  concordium-exporter:
+    image: ghcr.io/liray-unendlich/concordium-exporter:v1.2.2
+    environment:
+      CCDEXPORTER_HPORT: '9999'
+      CCDEXPORTER_URL: 'localhost:11111'
+      CCDEXPORTER_PWD: 'rpcasssn'
+    expose:
+     - '9999'
