@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	pb "github.com/liray-unendlich/concordium-grpc-api"
 	"github.com/prometheus/client_golang/prometheus"
@@ -454,12 +455,20 @@ func main() {
 	flag.StringVar(&hport, "hport", "9360", "The port listens on for HTTP requests")
 	flag.StringVar(&password, "pwd", password, "The password to pass concordium node")
 
+	flag.VisitAll(func(f *flag.Flag) {
+		if s := os.Getenv(strings.ToUpper("CCDEXPORTER_" + f.Name)); s != "" {
+			f.Value.Set(s)
+		}
+	})
 	flag.Parse()
+	println("concordium-exporter: v" + version)
+	println("Parameters:\nURL=" + url + "\nPORT=" + hport + "\nPASSWORD=" + password)
 
 	if len(flag.Args()) > 0 {
 		flag.Usage()
 	}
 
+	println("Initial connection started")
 	conn, err := grpc.Dial(url, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("client connection error: %#v", err)
