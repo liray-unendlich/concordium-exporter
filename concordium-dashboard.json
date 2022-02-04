@@ -50,7 +50,7 @@
 			},
 			"gridPos": {
 				"h": 4,
-				"w": 2,
+				"w": 3,
 				"x": 0,
 				"y": 0
 			},
@@ -75,7 +75,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_baker_id",
+					"expr": "concordium_baker_id{instance=\"concordium-exporter:9460\"}",
 					"interval": "",
 					"legendFormat": "",
 					"refId": "A"
@@ -112,7 +112,7 @@
 			"gridPos": {
 				"h": 4,
 				"w": 2,
-				"x": 2,
+				"x": 3,
 				"y": 0
 			},
 			"id": 26,
@@ -137,7 +137,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_baker_running",
+					"expr": "concordium_baker_running{instance=\"concordium-exporter:9460\"}",
 					"interval": "",
 					"legendFormat": "",
 					"refId": "A"
@@ -151,35 +151,7 @@
 			"fieldConfig": {
 				"defaults": {
 					"color": {
-						"mode": "palette-classic"
-					},
-					"custom": {
-						"axisLabel": "",
-						"axisPlacement": "auto",
-						"barAlignment": 0,
-						"drawStyle": "line",
-						"fillOpacity": 0,
-						"gradientMode": "none",
-						"hideFrom": {
-							"legend": false,
-							"tooltip": false,
-							"viz": false
-						},
-						"lineInterpolation": "linear",
-						"lineWidth": 1,
-						"pointSize": 5,
-						"scaleDistribution": {
-							"type": "linear"
-						},
-						"showPoints": "auto",
-						"spanNulls": false,
-						"stacking": {
-							"group": "A",
-							"mode": "none"
-						},
-						"thresholdsStyle": {
-							"mode": "off"
-						}
+						"mode": "thresholds"
 					},
 					"mappings": [],
 					"thresholds": {
@@ -194,40 +166,47 @@
 								"value": 80
 							}
 						]
-					}
+					},
+					"unit": "percentunit"
 				},
 				"overrides": []
 			},
 			"gridPos": {
 				"h": 4,
 				"w": 3,
-				"x": 4,
+				"x": 5,
 				"y": 0
 			},
-			"id": 8,
+			"id": 30,
 			"options": {
-				"legend": {
-					"calcs": [],
-					"displayMode": "hidden",
-					"placement": "bottom"
+				"colorMode": "value",
+				"graphMode": "area",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
 				},
-				"tooltip": {
-					"mode": "single",
-					"sort": "none"
-				}
+				"textMode": "auto"
 			},
+			"pluginVersion": "8.4.0-beta1",
 			"targets": [
 				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
 					"exemplar": true,
-					"expr": "concordium_finalization_period_inEMA",
+					"expr": "concordium_baker_lottery_power{instance=\"concordium-exporter:9460\"}",
 					"interval": "",
-					"legendFormat": "",
+					"legendFormat": "lottery power",
 					"refId": "A"
 				}
 			],
-			"title": "finalization period EMA",
+			"title": "Baking probability",
 			"transparent": true,
-			"type": "timeseries"
+			"type": "stat"
 		},
 		{
 			"fieldConfig": {
@@ -282,8 +261,8 @@
 			},
 			"gridPos": {
 				"h": 8,
-				"w": 7,
-				"x": 7,
+				"w": 6,
+				"x": 8,
 				"y": 0
 			},
 			"id": 12,
@@ -305,7 +284,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "rate(concordium_peer_total_received_amount[5m])",
+					"expr": "rate(concordium_peer_total_received_amount{instance=\"concordium-exporter:9460\"}[5m])",
 					"interval": "",
 					"legendFormat": "received packet",
 					"refId": "A"
@@ -316,7 +295,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "rate(concordium_peer_total_sent_amount[5m])",
+					"expr": "rate(concordium_peer_total_sent_amount{instance=\"concordium-exporter:9460\"}[5m])",
 					"hide": false,
 					"interval": "",
 					"legendFormat": "sent packet",
@@ -403,7 +382,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_best_block_height",
+					"expr": "concordium_best_block_height{instance=\"concordium-exporter:9460\"}",
 					"interval": "",
 					"legendFormat": "best_block_height",
 					"refId": "A"
@@ -414,7 +393,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_last_finalized_block_height",
+					"expr": "concordium_last_finalized_block_height{instance=\"concordium-exporter:9460\"}",
 					"hide": false,
 					"instant": false,
 					"interval": "",
@@ -425,6 +404,66 @@
 			"title": "Block height",
 			"transparent": true,
 			"type": "timeseries"
+		},
+		{
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "thresholds"
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 4,
+				"w": 4,
+				"x": 0,
+				"y": 4
+			},
+			"id": 32,
+			"options": {
+				"colorMode": "value",
+				"graphMode": "area",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"textMode": "auto"
+			},
+			"pluginVersion": "8.4.0-beta1",
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
+					"exemplar": true,
+					"expr": "concordium_estimated_baking_block_per_day",
+					"interval": "",
+					"legendFormat": "est. baking block",
+					"refId": "A"
+				}
+			],
+			"title": "Baking Est. per day",
+			"transparent": true,
+			"type": "stat"
 		},
 		{
 			"description": "Finalized block count after this node started.",
@@ -501,8 +540,8 @@
 			},
 			"gridPos": {
 				"h": 4,
-				"w": 3,
-				"x": 0,
+				"w": 4,
+				"x": 4,
 				"y": 4
 			},
 			"id": 28,
@@ -524,7 +563,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_finalization_count",
+					"expr": "concordium_finalization_count{instance=\"concordium-exporter:9460\"}",
 					"interval": "",
 					"legendFormat": "",
 					"refId": "A"
@@ -588,8 +627,278 @@
 			"gridPos": {
 				"h": 4,
 				"w": 4,
-				"x": 3,
-				"y": 4
+				"x": 0,
+				"y": 8
+			},
+			"id": 20,
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "hidden",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
+					"exemplar": true,
+					"expr": "concordium_transactions_per_block_inEMA{instance=\"concordium-exporter:9460\"}",
+					"interval": "",
+					"legendFormat": "",
+					"refId": "A"
+				}
+			],
+			"title": "Transaction per block EMA",
+			"transparent": true,
+			"type": "timeseries"
+		},
+		{
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 4,
+				"w": 4,
+				"x": 4,
+				"y": 8
+			},
+			"id": 14,
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "hidden",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
+					"exemplar": true,
+					"expr": "concordium_best_block_height{instance=\"concordium-exporter:9460\"} - concordium_last_finalized_block_height{instance=\"concordium-exporter:9460\"}",
+					"interval": "",
+					"legendFormat": "",
+					"refId": "A"
+				}
+			],
+			"title": "Difference with best/finalized",
+			"transparent": true,
+			"type": "timeseries"
+		},
+		{
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 8,
+				"w": 6,
+				"x": 8,
+				"y": 8
+			},
+			"id": 6,
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
+					"exemplar": true,
+					"expr": "concordium_block_receive_latency_inEMA{instance=\"concordium-exporter:9460\"}",
+					"interval": "",
+					"legendFormat": "received block latency",
+					"refId": "A"
+				},
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "B5xrxBbnz"
+					},
+					"exemplar": true,
+					"expr": "concordium_block_arrive_latency_inEMA{instance=\"concordium-exporter:9460\"}",
+					"hide": false,
+					"interval": "",
+					"legendFormat": "arrived block latency",
+					"refId": "B"
+				}
+			],
+			"title": "Received Block latency EMA",
+			"transparent": true,
+			"type": "timeseries"
+		},
+		{
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 4,
+				"w": 4,
+				"x": 0,
+				"y": 12
 			},
 			"id": 22,
 			"options": {
@@ -610,7 +919,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_block_arrive_period_inEMA",
+					"expr": "concordium_block_arrive_period_inEMA{instance=\"concordium-exporter:9460\"}",
 					"interval": "",
 					"legendFormat": "Arriving period",
 					"refId": "A"
@@ -621,7 +930,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_block_receive_period_inEMA",
+					"expr": "concordium_block_receive_period_inEMA{instance=\"concordium-exporter:9460\"}",
 					"hide": false,
 					"interval": "",
 					"legendFormat": "Receiving period",
@@ -684,12 +993,12 @@
 				"overrides": []
 			},
 			"gridPos": {
-				"h": 8,
-				"w": 7,
-				"x": 0,
-				"y": 8
+				"h": 4,
+				"w": 4,
+				"x": 4,
+				"y": 12
 			},
-			"id": 20,
+			"id": 8,
 			"options": {
 				"legend": {
 					"calcs": [],
@@ -703,202 +1012,14 @@
 			},
 			"targets": [
 				{
-					"datasource": {
-						"type": "prometheus",
-						"uid": "B5xrxBbnz"
-					},
 					"exemplar": true,
-					"expr": "concordium_transactions_per_block_inEMA",
+					"expr": "concordium_finalization_period_inEMA",
 					"interval": "",
 					"legendFormat": "",
 					"refId": "A"
 				}
 			],
-			"title": "Transaction per block EMA",
-			"transparent": true,
-			"type": "timeseries"
-		},
-		{
-			"fieldConfig": {
-				"defaults": {
-					"color": {
-						"mode": "palette-classic"
-					},
-					"custom": {
-						"axisLabel": "",
-						"axisPlacement": "auto",
-						"barAlignment": 0,
-						"drawStyle": "line",
-						"fillOpacity": 0,
-						"gradientMode": "none",
-						"hideFrom": {
-							"legend": false,
-							"tooltip": false,
-							"viz": false
-						},
-						"lineInterpolation": "linear",
-						"lineWidth": 1,
-						"pointSize": 5,
-						"scaleDistribution": {
-							"type": "linear"
-						},
-						"showPoints": "auto",
-						"spanNulls": false,
-						"stacking": {
-							"group": "A",
-							"mode": "none"
-						},
-						"thresholdsStyle": {
-							"mode": "off"
-						}
-					},
-					"mappings": [],
-					"thresholds": {
-						"mode": "absolute",
-						"steps": [
-							{
-								"color": "green",
-								"value": null
-							},
-							{
-								"color": "red",
-								"value": 80
-							}
-						]
-					}
-				},
-				"overrides": []
-			},
-			"gridPos": {
-				"h": 8,
-				"w": 7,
-				"x": 7,
-				"y": 8
-			},
-			"id": 14,
-			"options": {
-				"legend": {
-					"calcs": [],
-					"displayMode": "hidden",
-					"placement": "bottom"
-				},
-				"tooltip": {
-					"mode": "single",
-					"sort": "none"
-				}
-			},
-			"targets": [
-				{
-					"datasource": {
-						"type": "prometheus",
-						"uid": "B5xrxBbnz"
-					},
-					"exemplar": true,
-					"expr": "concordium_best_block_height - concordium_last_finalized_block_height",
-					"interval": "",
-					"legendFormat": "",
-					"refId": "A"
-				}
-			],
-			"title": "Difference with finalized/unfinalized",
-			"transparent": true,
-			"type": "timeseries"
-		},
-		{
-			"fieldConfig": {
-				"defaults": {
-					"color": {
-						"mode": "palette-classic"
-					},
-					"custom": {
-						"axisLabel": "",
-						"axisPlacement": "auto",
-						"barAlignment": 0,
-						"drawStyle": "line",
-						"fillOpacity": 0,
-						"gradientMode": "none",
-						"hideFrom": {
-							"legend": false,
-							"tooltip": false,
-							"viz": false
-						},
-						"lineInterpolation": "linear",
-						"lineWidth": 1,
-						"pointSize": 5,
-						"scaleDistribution": {
-							"type": "linear"
-						},
-						"showPoints": "auto",
-						"spanNulls": false,
-						"stacking": {
-							"group": "A",
-							"mode": "none"
-						},
-						"thresholdsStyle": {
-							"mode": "off"
-						}
-					},
-					"mappings": [],
-					"thresholds": {
-						"mode": "absolute",
-						"steps": [
-							{
-								"color": "green",
-								"value": null
-							},
-							{
-								"color": "red",
-								"value": 80
-							}
-						]
-					}
-				},
-				"overrides": []
-			},
-			"gridPos": {
-				"h": 8,
-				"w": 7,
-				"x": 14,
-				"y": 8
-			},
-			"id": 6,
-			"options": {
-				"legend": {
-					"calcs": [],
-					"displayMode": "list",
-					"placement": "bottom"
-				},
-				"tooltip": {
-					"mode": "single",
-					"sort": "none"
-				}
-			},
-			"targets": [
-				{
-					"datasource": {
-						"type": "prometheus",
-						"uid": "B5xrxBbnz"
-					},
-					"exemplar": true,
-					"expr": "concordium_block_receive_latency_inEMA",
-					"interval": "",
-					"legendFormat": "received block latency",
-					"refId": "A"
-				},
-				{
-					"datasource": {
-						"type": "prometheus",
-						"uid": "B5xrxBbnz"
-					},
-					"exemplar": true,
-					"expr": "concordium_block_arrive_latency_inEMA",
-					"hide": false,
-					"interval": "",
-					"legendFormat": "arrived block latency",
-					"refId": "B"
-				}
-			],
-			"title": "Received Block latency EMA",
+			"title": "finalization period EMA",
 			"transparent": true,
 			"type": "timeseries"
 		}
@@ -911,13 +1032,13 @@
 		"list": []
 	},
 	"time": {
-		"from": "now-2d",
+		"from": "now-3h",
 		"to": "now"
 	},
 	"timepicker": {},
 	"timezone": "",
 	"title": "Concordium Dashboard",
 	"uid": "ccd",
-	"version": 8,
+	"version": 10,
 	"weekStart": ""
 }
