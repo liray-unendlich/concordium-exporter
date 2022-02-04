@@ -20,11 +20,10 @@ import (
 
 // Setup initial variables
 var version = "1.2.1"
-
-const namespace = "concordium"
-
 var url = "localhost:10000"
 var password = "rpcadmin"
+
+const namespace = "concordium"
 
 type metricsData struct {
 	PeerTotalReceived        float64
@@ -32,36 +31,25 @@ type metricsData struct {
 	LastFinalizedBlockHeight float64
 	BlockArriveLatencyEMSD   float64
 	BlockReceiveLatencyEMSD  float64
-	LastFinalizedBlock       string
 	BlockReceivePeriodEMSD   float64
 	BlockArrivePeriodEMSD    float64
 	BlocksReceivedCount      float64
 	TransactionsPerBlockEMSD float64
 	FinalizationPeriodEMA    float64
 	BestBlockHeight          float64
-	LastFinalizedTime        string
 	FinalizationCount        float64
 	EpochDuration            float64
 	BlocksVerifiedCount      float64
 	SlotDuration             float64
-	GenesisTime              string
 	FinalizationPeriodEMSD   float64
 	TransactionsPerBlockEMA  float64
 	BlockArriveLatencyEMA    float64
 	BlockReceiveLatencyEMA   float64
 	BlockArrivePeriodEMA     float64
 	BlockReceivePeriodEMA    float64
-	BlockLastArrivedTime     string
-	BestBlock                string
-	GenesisBlock             string
-	BlockLastReceivedTime    string
-	// NodeInfo
-	// nodeId string
-	// currentTime int
-	BakerRunning int
-	Running      int
-	// BakerCommittee string
-	BakerId int
+	BakerRunning             int
+	Running                  int
+	BakerId                  int
 }
 
 type concordiumCollector struct {
@@ -70,7 +58,6 @@ type concordiumCollector struct {
 	LastFinalizedBlockHeight prometheus.Gauge
 	BlockArriveLatencyEMSD   prometheus.Gauge
 	BlockReceiveLatencyEMSD  prometheus.Gauge
-	// LastFinalizedBlock string
 	BlockReceivePeriodEMSD   prometheus.Gauge
 	BlockArrivePeriodEMSD    prometheus.Gauge
 	BlocksReceivedCount      prometheus.Gauge
@@ -82,23 +69,15 @@ type concordiumCollector struct {
 	EpochDuration            prometheus.Gauge
 	BlocksVerifiedCount      prometheus.Gauge
 	SlotDuration             prometheus.Gauge
-	// GenesisTime string
-	FinalizationPeriodEMSD  prometheus.Gauge
-	TransactionsPerBlockEMA prometheus.Gauge
-	BlockArriveLatencyEMA   prometheus.Gauge
-	BlockReceiveLatencyEMA  prometheus.Gauge
-	BlockArrivePeriodEMA    prometheus.Gauge
-	BlockReceivePeriodEMA   prometheus.Gauge
-	// BlockLastArrivedTime string
-	// BestBlock string
-	// GenesisBlock string
-	// BlockLastReceivedTime string
-	// NodeInfo
-	// nodeId string
-	// currentTime int64
-	BakerRunning prometheus.Gauge
-	Running      prometheus.Gauge
-	BakerId      prometheus.Gauge
+	FinalizationPeriodEMSD   prometheus.Gauge
+	TransactionsPerBlockEMA  prometheus.Gauge
+	BlockArriveLatencyEMA    prometheus.Gauge
+	BlockReceiveLatencyEMA   prometheus.Gauge
+	BlockArrivePeriodEMA     prometheus.Gauge
+	BlockReceivePeriodEMA    prometheus.Gauge
+	BakerRunning             prometheus.Gauge
+	Running                  prometheus.Gauge
+	BakerId                  prometheus.Gauge
 }
 
 func newconcordiumCollector() *concordiumCollector {
@@ -417,16 +396,19 @@ func (c *concordiumCollector) fetchAPI() (metricsData, error) {
 		fmt.Printf("Get NodeInfo:%#v \n", err_node)
 		return data, err_node
 	}
+	// Judge baker status
 	if response_node.ConsensusBakerRunning {
 		data.BakerRunning = 1
 	} else {
 		data.BakerRunning = 0
 	}
+	// Judge node status
 	if response_node.ConsensusRunning {
 		data.Running = 1
 	} else {
 		data.Running = 0
 	}
+	// Exchange bakerId
 	data.BakerId = int(response_node.ConsensusBakerId.Value)
 	return data, err
 }
@@ -440,6 +422,7 @@ func metricsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// Show help information
 	flag.Usage = func() {
 		const (
 			usage = "Usage: concordium_exporter\n\n" + "Prometheus exporter for Concordium node metrics\n\n"
@@ -451,16 +434,20 @@ func main() {
 
 	var hport string
 
+	// Fetch flag variables
 	flag.StringVar(&url, "url", "localhost:10000", "Concordium gRPC URL")
 	flag.StringVar(&hport, "hport", "9360", "The port listens on for HTTP requests")
 	flag.StringVar(&password, "pwd", password, "The password to pass concordium node")
 
+	// Fetch environment variables
 	flag.VisitAll(func(f *flag.Flag) {
 		if s := os.Getenv(strings.ToUpper("CCDEXPORTER_" + f.Name)); s != "" {
 			f.Value.Set(s)
 		}
 	})
 	flag.Parse()
+
+	// Show each variables
 	println("concordium-exporter: v" + version)
 	println("Parameters:\nURL=" + url + "\nPORT=" + hport + "\nPASSWORD=" + password)
 
@@ -468,6 +455,7 @@ func main() {
 		flag.Usage()
 	}
 
+	// Start gRPC connection
 	println("Initial connection started")
 	conn, err := grpc.Dial(url, grpc.WithInsecure())
 	if err != nil {
@@ -475,6 +463,7 @@ func main() {
 	}
 	defer conn.Close()
 
+	// Start collecting
 	http.HandleFunc("/metrics", func(w http.ResponseWriter, r *http.Request) {
 		metricsHandler(w, r)
 	})
