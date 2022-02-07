@@ -75,7 +75,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_baker_id{instance=\"concordium-exporter:9460\"}",
+					"expr": "concordium_baker_id",
 					"interval": "",
 					"legendFormat": "",
 					"refId": "A"
@@ -137,7 +137,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_baker_running{instance=\"concordium-exporter:9460\"}",
+					"expr": "concordium_baker_running",
 					"interval": "",
 					"legendFormat": "",
 					"refId": "A"
@@ -198,7 +198,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_baker_lottery_power{instance=\"concordium-exporter:9460\"}",
+					"expr": "concordium_baker_lottery_power",
 					"interval": "",
 					"legendFormat": "lottery power",
 					"refId": "A"
@@ -284,7 +284,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "rate(concordium_peer_total_received_amount{instance=\"concordium-exporter:9460\"}[5m])",
+					"expr": "rate(concordium_peer_total_received_amount[5m])",
 					"interval": "",
 					"legendFormat": "received packet",
 					"refId": "A"
@@ -295,7 +295,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "rate(concordium_peer_total_sent_amount{instance=\"concordium-exporter:9460\"}[5m])",
+					"expr": "rate(concordium_peer_total_sent_amount[5m])",
 					"hide": false,
 					"interval": "",
 					"legendFormat": "sent packet",
@@ -382,7 +382,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_best_block_height{instance=\"concordium-exporter:9460\"}",
+					"expr": "concordium_best_block_height",
 					"interval": "",
 					"legendFormat": "best_block_height",
 					"refId": "A"
@@ -393,7 +393,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_last_finalized_block_height{instance=\"concordium-exporter:9460\"}",
+					"expr": "concordium_last_finalized_block_height",
 					"hide": false,
 					"instant": false,
 					"interval": "",
@@ -518,9 +518,7 @@
 							"id": "byNames",
 							"options": {
 								"mode": "exclude",
-								"names": [
-									"concordium_finalization_count{instance=\"concordium-exporter:9460\", job=\"concordium-exporter\"}"
-								],
+								"names": ["concordium_finalization_count"],
 								"prefix": "All except:",
 								"readOnly": true
 							}
@@ -563,7 +561,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_finalization_count{instance=\"concordium-exporter:9460\"}",
+					"expr": "concordium_finalization_count",
 					"interval": "",
 					"legendFormat": "",
 					"refId": "A"
@@ -649,7 +647,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_transactions_per_block_inEMA{instance=\"concordium-exporter:9460\"}",
+					"expr": "concordium_transactions_per_block_inEMA",
 					"interval": "",
 					"legendFormat": "",
 					"refId": "A"
@@ -735,7 +733,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_best_block_height{instance=\"concordium-exporter:9460\"} - concordium_last_finalized_block_height{instance=\"concordium-exporter:9460\"}",
+					"expr": "concordium_best_block_height - concordium_last_finalized_block_height",
 					"interval": "",
 					"legendFormat": "",
 					"refId": "A"
@@ -821,7 +819,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_block_receive_latency_inEMA{instance=\"concordium-exporter:9460\"}",
+					"expr": "concordium_block_receive_latency_inEMA",
 					"interval": "",
 					"legendFormat": "received block latency",
 					"refId": "A"
@@ -832,7 +830,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_block_arrive_latency_inEMA{instance=\"concordium-exporter:9460\"}",
+					"expr": "concordium_block_arrive_latency_inEMA",
 					"hide": false,
 					"interval": "",
 					"legendFormat": "arrived block latency",
@@ -919,7 +917,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_block_arrive_period_inEMA{instance=\"concordium-exporter:9460\"}",
+					"expr": "concordium_block_arrive_period_inEMA",
 					"interval": "",
 					"legendFormat": "Arriving period",
 					"refId": "A"
@@ -930,7 +928,7 @@
 						"uid": "B5xrxBbnz"
 					},
 					"exemplar": true,
-					"expr": "concordium_block_receive_period_inEMA{instance=\"concordium-exporter:9460\"}",
+					"expr": "concordium_block_receive_period_inEMA",
 					"hide": false,
 					"interval": "",
 					"legendFormat": "Receiving period",
